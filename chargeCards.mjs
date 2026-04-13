@@ -7,8 +7,17 @@ let currentData = null;
 fetch("https://servicodados.ibge.gov.br/api/v1/produtos/estatisticas")
   .then(response => response.json())
   .then(data => {
-    console.log(data);
-    currentData = data;
+    console.log("Datos obtenidos:", data.length);
+    
+    // Primero, volvemos a tomar solamente los primeros 12 como habíamos acordado
+    const primerosDoce = data.slice(0, 12);
+
+    // Luego, ordenamos SOLO esos 12 por su tamaño de información (de mayor a menor)
+    currentData = primerosDoce.sort((a, b) => {
+      const largoA = (a.titulo ? a.titulo.length : 0) + (a.alias ? a.alias.length : 0);
+      const largoB = (b.titulo ? b.titulo.length : 0) + (b.alias ? b.alias.length : 0);
+      return largoB - largoA;
+    });
   })
 
 

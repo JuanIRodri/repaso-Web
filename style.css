@@ -28,8 +28,8 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 18px 28px;
-  border-bottom: 1px solid #eef2f7;
-  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  background: #1e6a96;
+  border-bottom: none;
 }
 
 .logo {
@@ -48,14 +48,25 @@ nav ul {
 
 nav ul li {
   text-decoration: none;
-  color: #0b4a6f;
+  color: #ffffff;
+  background-color: #0b4a6f;
   font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(11, 74, 111, 0.2);
+  transition: all 0.2s ease;
 }
 
 nav li:hover {
-  background: rgba(11, 74, 111, 0.06);
+  background-color: #083854;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(11, 74, 111, 0.3);
+}
+
+nav li:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(11, 74, 111, 0.2);
 }
 
 /* Main and cards container */
@@ -75,20 +86,24 @@ main {
 /* Card (matching structure created by script.js: img, h2, p) */
 .card {
   width: 220px;
-  background: #ffffff;
+  background: #aec2d1;
   border-radius: 10px;
   padding: 0;
   overflow: hidden;
-  border: 1px solid #eef3f7;
+  /* Borde ligeramente más oscuro que el fondo para hacer contraste */
+  border: 2px solid #8ca6b8;
   box-shadow: 0 6px 18px rgba(11, 74, 111, 0.04);
   display: flex;
   flex-direction: column;
-  transition: transform .16s ease, box-shadow .16s ease;
+  /* Sumamos transición al color del borde */
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
   box-shadow: 0 14px 30px rgba(11, 74, 111, 0.12);
+  /* El borde se vuelve del color principal al posar el mouse */
+  border-color: #0b4a6f;
 }
 
 .card img {
@@ -115,7 +130,7 @@ main {
 footer {
   padding: 14px 28px;
   border-top: 1px solid #eef2f7;
-  background: #fafbfd;
+  background: #1e6a96;
 }
 
 .networks ul {
@@ -127,11 +142,27 @@ footer {
 }
 
 .networks a {
+  display: inline-block;
   text-decoration: none;
-  color: #0b4a6f;
+  color: #ffffff;
+  background-color: #0b4a6f;
   font-weight: 600;
-  padding: 6px 8px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(11, 74, 111, 0.2);
+  transition: all 0.2s ease;
+}
+
+.networks a:hover {
+  background-color: #083854;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(11, 74, 111, 0.3);
+}
+
+.networks a:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(11, 74, 111, 0.2);
 }
 
 /* Utilities */

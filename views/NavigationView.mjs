@@ -16,4 +16,12 @@ export default class NavigationView {
   bindInscription(handler) {
     this.btnInscription.addEventListener("click", handler);
   }
+
+  setActive(targetId) {
+    [this.btnHome, this.btnParticipants, this.btnInscription].forEach(btn => {
+      btn.classList.remove("active");
+    });
+    const activeBtn = document.getElementById(targetId);
+    if (activeBtn) activeBtn.classList.add("active");
+  }
 }

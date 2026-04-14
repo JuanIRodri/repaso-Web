@@ -4,20 +4,20 @@ export default class InscriptionController {
     this.view = inscriptionView;
   }
 
-  init() {
+  init(onNavigateHome) {
+    this.view.setNavigationCallback(onNavigateHome);
     this.view.renderForm(this.handleRegistrationSubmit.bind(this));
   }
 
   async handleRegistrationSubmit(data) {
-    // Reutilizamos el display para poner loading text en el contenedor sin llamar a views de terceros
-    this.view.container.innerHTML = "<p>Procesando registro simulado en base de datos de competencia...</p>";
+    this.view.renderLoading("Procesando registro simulado en base de datos de competencia...");
     
     const response = await this.model.saveRegistration(data);
     
     if (response.success) {
       this.view.renderSuccess();
     } else {
-      this.view.container.innerHTML = "<p>Lo lamentamos, ocurrió un error durante el registro.</p>";
+      this.view.renderError(response.message || "Lo lamentamos, ocurrió un error durante el registro.");
     }
   }
 }

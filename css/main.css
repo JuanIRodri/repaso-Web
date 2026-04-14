@@ -63,9 +63,12 @@ nav li:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-nav li:active {
+nav li:active,
+nav li.active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #e0f2fe;
+    color: #0369a1;
 }
 
 /* Main Content Container */
@@ -82,8 +85,101 @@ nav li:active {
 }
 
 main {
-    padding: 34px 30px;
+    padding: 0; /* Quitamos padding para que el Hero sea full width */
     min-height: 420px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #bae6fd, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin-bottom: 32px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.hero .cta-container {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-hero {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-hero.primary {
+    background-color: #0ea5e9;
+    color: #ffffff;
+    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+}
+
+.btn-hero.primary:hover {
+    background-color: #0284c7;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(14, 165, 233, 0.3);
+}
+
+.btn-hero.secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+}
+
+.btn-hero.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.home-content {
+    padding: 40px 30px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* Footer Full Width */

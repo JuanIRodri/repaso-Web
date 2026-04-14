@@ -14,6 +14,12 @@ export default class AppController {
     this.navView.bindParticipants(this.navigateParticipants.bind(this));
     this.navView.bindInscription(this.navigateInscription.bind(this));
 
+    // Configurar callbacks internos de navegación para el Home
+    this.homeController.setNavigationCallbacks(
+      this.navigateInscription.bind(this),
+      this.navigateParticipants.bind(this)
+    );
+
     // Arranque inicial SPA
     this.navigateHome();
   }
@@ -34,17 +40,20 @@ export default class AppController {
   }
 
   navigateHome() {
+    this.navView.setActive("home");
     this.loadDynamicCSS("");
     this.homeController.init();
   }
 
   navigateParticipants() {
+    this.navView.setActive("participants");
     this.loadDynamicCSS("css/participants.css");
     this.participantController.init();
   }
 
   navigateInscription() {
+    this.navView.setActive("inscription");
     this.loadDynamicCSS("css/inscription.css");
-    this.inscriptionController.init();
+    this.inscriptionController.init(this.navigateHome.bind(this));
   }
 }

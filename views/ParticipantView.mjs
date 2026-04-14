@@ -27,14 +27,18 @@ export default class ParticipantView {
       const cardElement = document.createElement("div");
       cardElement.classList.add("card");
 
-      const titleElement = document.createElement("h2");
-      titleElement.textContent = card.titulo;
-
-      const descriptionElement = document.createElement("p");
-      descriptionElement.textContent = card.alias || "Sin descripción proporcionada";
-
-      cardElement.appendChild(titleElement);
-      cardElement.appendChild(descriptionElement);
+      cardElement.innerHTML = `
+        <div class="card-header">
+          <i class="fa-solid fa-microphone"></i>
+        </div>
+        <div class="card-body">
+          <h2>${card.fullname}</h2>
+          <p class="email">${card.email || "Sin correo"}</p>
+        </div>
+        <div class="card-footer">
+          <span class="badge">${card.category || "Inscripto"}</span>
+        </div>
+      `;
 
       this.container.appendChild(cardElement);
     });

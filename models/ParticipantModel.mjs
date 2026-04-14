@@ -1,3 +1,5 @@
+import Database from "./Database.mjs";
+
 export default class ParticipantModel {
   constructor() {
     this.participants = [];
@@ -5,15 +7,15 @@ export default class ParticipantModel {
 
   async fetchParticipants() {
     try {
-      const response = await fetch("https://servicodados.ibge.gov.br/api/v1/produtos/estatisticas");
-      if (!response.ok) throw new Error("Error en la respuesta de la red");
-      const data = await response.json();
+      // Simulamos latencia temporal web
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      const rawData = Database.getParticipants();
       
-      const primerosDoce = data.slice(0, 12);
-      this.participants = primerosDoce.sort((a, b) => {
-        const titleA = a.titulo ? a.titulo.toLowerCase() : "";
-        const titleB = b.titulo ? b.titulo.toLowerCase() : "";
-        return titleA.localeCompare(titleB);
+      this.participants = rawData.sort((a, b) => {
+        const nameA = a.fullname ? a.fullname.toLowerCase() : "";
+        const nameB = b.fullname ? b.fullname.toLowerCase() : "";
+        return nameA.localeCompare(nameB);
       });
       return this.participants;
     } catch (error) {

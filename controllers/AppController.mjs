@@ -1,29 +1,21 @@
 import NavigationView from "../views/NavigationView.mjs";
-import HomeView from "../views/HomeView.mjs";
-import ParticipantView from "../views/ParticipantView.mjs";
-import InscriptionView from "../views/InscriptionView.mjs";
 
 export default class AppController {
-  constructor(participantModel, registrationModel) {
-    this.participantModel = participantModel;
-    this.registrationModel = registrationModel;
-    
-    // Contenedor principal de la APP
-    const appContainer = document.getElementById("cards");
+  constructor(homeController, participantController, inscriptionController) {
+    this.homeController = homeController;
+    this.participantController = participantController;
+    this.inscriptionController = inscriptionController;
 
-    // Instanciamos las nuevas mini-vistas separadas
+    // View de Navigacion Global
     this.navView = new NavigationView();
-    this.homeView = new HomeView(appContainer);
-    this.participantView = new ParticipantView(appContainer);
-    this.inscriptionView = new InscriptionView(appContainer);
 
-    // Vinculamos los eventos generados por la barra de navegación
-    this.navView.bindHome(this.handleHome.bind(this));
-    this.navView.bindParticipants(this.handleParticipants.bind(this));
-    this.navView.bindInscription(this.handleInscription.bind(this));
+    // Bindings de Navigación para el Router
+    this.navView.bindHome(this.navigateHome.bind(this));
+    this.navView.bindParticipants(this.navigateParticipants.bind(this));
+    this.navView.bindInscription(this.navigateInscription.bind(this));
 
-    // Renderizamos la pantalla inicial por defecto
-    this.handleHome();
+    // Arranque inicial SPA
+    this.navigateHome();
   }
 
   loadDynamicCSS(filename) {
@@ -34,7 +26,6 @@ export default class AppController {
       link.rel = "stylesheet";
       document.head.appendChild(link);
     }
-    // Si la página no usa css extra lo removemos para limpiar UI
     if (!filename) {
       link.href = "";
     } else {
@@ -42,32 +33,18 @@ export default class AppController {
     }
   }
 
-  handleHome() {
-    this.loadDynamicCSS(""); 
-    this.homeView.render();
+  navigateHome() {
+    this.loadDynamicCSS("");
+    this.homeController.init();
   }
 
-  async handleParticipants() {
-    // Apuntamos al nuevo CSS base
+  navigateParticipants() {
     this.loadDynamicCSS("css/participants.css");
-    this.participantView.renderLoading();
-    
-    const participants = await this.participantModel.fetchParticipants();
-    this.participantView.render(participants);
+    this.participantController.init();
   }
 
-  handleInscription() {
+  navigateInscription() {
     this.loadDynamicCSS("css/inscription.css");
-    this.inscriptionView.renderForm(this.handleRegistrationSubmit.bind(this));
-  }
-
-  async handleRegistrationSubmit(data) {
-    this.participantView.renderLoading();
-    
-    const response = await this.registrationModel.saveRegistration(data);
-    
-    if (response.success) {
-      this.inscriptionView.renderSuccess();
-    }
+    this.inscriptionController.init();
   }
 }

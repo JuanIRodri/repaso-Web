@@ -11,9 +11,9 @@ export default class ParticipantModel {
       
       const primerosDoce = data.slice(0, 12);
       this.participants = primerosDoce.sort((a, b) => {
-        const largoA = (a.titulo ? a.titulo.length : 0) + (a.alias ? a.alias.length : 0);
-        const largoB = (b.titulo ? b.titulo.length : 0) + (b.alias ? b.alias.length : 0);
-        return largoB - largoA;
+        const titleA = a.titulo ? a.titulo.toLowerCase() : "";
+        const titleB = b.titulo ? b.titulo.toLowerCase() : "";
+        return titleA.localeCompare(titleB);
       });
       return this.participants;
     } catch (error) {

@@ -1,25 +1,7 @@
+import ProductModel from "./models/ProductModel.mjs";
+import AppView from "./views/AppView.mjs";
+import AppController from "./controllers/AppController.mjs";
 
-
-
-
-
-
-
-import { chargeCards } from "./chargeCards.mjs";
-import { createHome } from "./home.mjs";
-
-
-
-
-
-const cardContainer = document.getElementById("cards");
-
-// Version arrow function
-document.getElementById("home").addEventListener("click", () => {
-  cardContainer.innerHTML = "";
-  createHome();
+document.addEventListener("DOMContentLoaded", () => {
+  const app = new AppController(new ProductModel(), new AppView());
 });
-
-document.getElementById("products").addEventListener("click", chargeCards);
-
-

@@ -13,7 +13,7 @@ import AppController from "./controllers/AppController.mjs";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Main Canvas
-  const appContainer = document.getElementById("cards");
+  const appContainer = document.getElementById("app");
 
   // Instancias de Modelos
   const participantModel = new ParticipantModel();

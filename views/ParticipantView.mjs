@@ -5,27 +5,39 @@ export default class ParticipantView {
 
   clear() {
     this.container.innerHTML = "";
+    this.container.classList.remove("cards"); // Limpiamos clase de grid para no afectar otras vistas
   }
 
   renderLoading() {
     this.clear();
-    const loadingElement = document.createElement("p");
-    loadingElement.textContent = "Cargando datos de participantes...";
-    this.container.appendChild(loadingElement);
+    this.container.innerHTML = `
+      <div class="status-container loading">
+        <div class="spinner"></div>
+        <p>Conectando con la liga de freestyle...</p>
+      </div>
+    `;
   }
 
   render(participants) {
     this.clear();
     if (!participants || participants.length === 0) {
-      const errorElement = document.createElement("p");
-      errorElement.textContent = "No logramos obtener participantes. Inténtalo más tarde.";
-      this.container.appendChild(errorElement);
+      this.container.innerHTML = `
+        <div class="status-container empty fade-in">
+          <i class="fa-solid fa-ghost"></i>
+          <h2>No hay MCs inscriptos</h2>
+          <p>La lista está vacía. ¡Sé el primero en anotarte para la batalla!</p>
+        </div>
+      `;
       return;
     }
 
-    participants.forEach(card => {
+    // Aplicamos la rejilla directamente al contenedor principal para esta vista
+    this.container.classList.add("cards");
+
+    participants.forEach((card, index) => {
       const cardElement = document.createElement("div");
-      cardElement.classList.add("card");
+      cardElement.classList.add("card", "fade-in");
+      cardElement.style.animationDelay = `${index * 0.05}s`;
 
       cardElement.innerHTML = `
         <div class="card-header">

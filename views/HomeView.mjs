@@ -12,7 +12,7 @@ export default class HomeView {
     
     // Hero Section
     const hero = document.createElement("section");
-    hero.classList.add("hero");
+    hero.classList.add("hero", "fade-in");
     hero.innerHTML = `
       <h1>La Batalla Final</h1>
       <p>Entra al círculo, demuestra tu ingenio y conquista el escenario. La competencia de rap más grande de la ciudad te espera.</p>
@@ -28,7 +28,8 @@ export default class HomeView {
     
     // Contenido adicional
     const homeContent = document.createElement("div");
-    homeContent.classList.add("home-content");
+    homeContent.classList.add("home-content", "fade-in");
+    homeContent.style.animationDelay = "0.2s";
     homeContent.innerHTML = `
       <h2>¿Estás listo para el freestyle?</h2>
       <p>Nuestra plataforma te permite registrarte oficialmente, consultar la lista de MCs confirmados y prepararte para el gran evento.</p>

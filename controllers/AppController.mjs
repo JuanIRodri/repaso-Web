@@ -1,27 +1,73 @@
-export default class AppController {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
+import NavigationView from "../views/NavigationView.mjs";
+import HomeView from "../views/HomeView.mjs";
+import ParticipantView from "../views/ParticipantView.mjs";
+import InscriptionView from "../views/InscriptionView.mjs";
 
-    // Vinculamos los eventos desde la vista hacia los métodos del controlador
-    this.view.bindHome(this.handleHome.bind(this));
-    this.view.bindProducts(this.handleProducts.bind(this));
+export default class AppController {
+  constructor(participantModel, registrationModel) {
+    this.participantModel = participantModel;
+    this.registrationModel = registrationModel;
+    
+    // Contenedor principal de la APP
+    const appContainer = document.getElementById("cards");
+
+    // Instanciamos las nuevas mini-vistas separadas
+    this.navView = new NavigationView();
+    this.homeView = new HomeView(appContainer);
+    this.participantView = new ParticipantView(appContainer);
+    this.inscriptionView = new InscriptionView(appContainer);
+
+    // Vinculamos los eventos generados por la barra de navegación
+    this.navView.bindHome(this.handleHome.bind(this));
+    this.navView.bindParticipants(this.handleParticipants.bind(this));
+    this.navView.bindInscription(this.handleInscription.bind(this));
 
     // Renderizamos la pantalla inicial por defecto
     this.handleHome();
   }
 
-  handleHome() {
-    this.view.renderHome();
+  loadDynamicCSS(filename) {
+    let link = document.getElementById("dynamic-page-css");
+    if (!link) {
+      link = document.createElement("link");
+      link.id = "dynamic-page-css";
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+    }
+    // Si la página no usa css extra lo removemos para limpiar UI
+    if (!filename) {
+      link.href = "";
+    } else {
+      link.href = filename;
+    }
   }
 
-  async handleProducts() {
-    this.view.renderLoading();
+  handleHome() {
+    this.loadDynamicCSS(""); 
+    this.homeView.render();
+  }
+
+  async handleParticipants() {
+    // Apuntamos al nuevo CSS base
+    this.loadDynamicCSS("css/participants.css");
+    this.participantView.renderLoading();
     
-    // Obtenemos los productos desde el modelo
-    const products = await this.model.fetchProducts();
+    const participants = await this.participantModel.fetchParticipants();
+    this.participantView.render(participants);
+  }
+
+  handleInscription() {
+    this.loadDynamicCSS("css/inscription.css");
+    this.inscriptionView.renderForm(this.handleRegistrationSubmit.bind(this));
+  }
+
+  async handleRegistrationSubmit(data) {
+    this.participantView.renderLoading();
     
-    // Le pasamos la data a la vista para que la muestre
-    this.view.renderProducts(products);
+    const response = await this.registrationModel.saveRegistration(data);
+    
+    if (response.success) {
+      this.inscriptionView.renderSuccess();
+    }
   }
 }
